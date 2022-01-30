@@ -29,7 +29,8 @@ export default class Component<P, S> implements IComponent {
   render() {
     const template = document.createElement('template');
     template.innerHTML = this.template();
-    this.targetEl.insertAdjacentElement('beforeend', template.content.firstElementChild);
+    template.content.firstElementChild &&
+      this.targetEl.insertAdjacentElement('beforeend', template.content.firstElementChild);
     this.didMount();
   }
 
