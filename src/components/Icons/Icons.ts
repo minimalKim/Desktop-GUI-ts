@@ -18,7 +18,7 @@ type newIcons = { applications: ApplicationType[]; folders: FolderType[] };
 type IconsState = {};
 
 export class Icons extends Component<IconsProps, IconsState> {
-  didMount(): void {
+  willMount(): void {
     const { sortedIcons, targetEl } = this;
     sortedIcons.map(icon =>
       icon.type === APPLICATION_LABEL ? new Application(targetEl, icon) : new Folder(targetEl, icon)

@@ -16,7 +16,12 @@ export class Application extends Component<ApplicationProps, ApplicationState> {
     return `
       <div class="${styles.wrapper} application ${DRAG_BOX}" data-id="${this.props.id}">
         <div class="${styles.icon} application ${DRAG_GRABBER}"></div>
-        <h3 class="title">${this.props.title}</h3>
+        <h3 class="title"></h3>
       </div>`;
+  }
+
+  didMount(): void {
+    const titleEl = this.element.querySelector('.title');
+    titleEl.textContent = this.props.title;
   }
 }

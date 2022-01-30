@@ -1,8 +1,11 @@
-import { FOLDER_LABEL, APPLICATION_LABEL } from '@/utils/constants';
+import { Windows } from './../Windows/Windows';
+import { FOLDER_LABEL, APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import { makeId } from '@/utils/helper';
 import Component from '@/core/Component';
 import styles from './Desktop.module.css';
 import { Icons } from '../Icons';
+import { createMouseDownHandlerForDragDrop } from '@/utils/event';
+import { WindowType, Window } from '../Windows';
 
 export type ApplicationType = {
   order: number;
@@ -25,7 +28,7 @@ type DesktopState = {
     applications: ApplicationType[];
     folders: FolderType[];
   };
-  windows: [];
+  windows: WindowType[];
 };
 
 export class Desktop extends Component<DesktopProps, DesktopState> {
@@ -67,18 +70,43 @@ export class Desktop extends Component<DesktopProps, DesktopState> {
           { order: 7, type: FOLDER_LABEL, title: '8', id: makeId() },
         ],
       },
-      windows: [],
+      windows: [
+        { order: 0, type: APPLICATION_LABEL, title: 'Todo', id: makeId(), position: { x: 300, y: 300 } },
+        { order: 1, type: APPLICATION_LABEL, title: 'Todo', id: makeId(), position: { x: 300, y: 300 } },
+      ],
     };
   }
 
   didMount(): void {
     const windowRootEl = this.targetEl.querySelector('.window-root') as HTMLElement;
+    new Windows(windowRootEl, {
+      windows: this.state.windows,
+      closeWindow: this.closeWindow.bind(this),
+      dragWindow: this.dragWindow.bind(this),
+    });
+
     const iconRootEl = this.targetEl.querySelector('.icon-root') as HTMLElement;
-    new Icons(iconRootEl, { icons: this.state.icons, swapIcons: this.swapIcons.bind(this) });
+    new Icons(iconRootEl, {
+      icons: this.state.icons,
+      swapIcons: this.swapIcons.bind(this),
+    });
   }
 
   swapIcons(newIcons: { applications: ApplicationType[]; folders: FolderType[] }): void {
-    console.log({ ...this.state, icons: newIcons });
     this.setState({ ...this.state, icons: newIcons });
+  }
+
+  closeWindow(id: string) {
+    this.setState({
+      ...this.state,
+      windows: this.state.windows.filter(window => window.id !== id),
+    });
+  }
+
+  dragWindow(id: string, draggingWindowState: WindowType) {
+    this.setState({
+      ...this.state,
+      windows: [...this.state.windows.filter(window => window.id !== id), draggingWindowState],
+    });
   }
 }

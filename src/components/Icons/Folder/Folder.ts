@@ -10,13 +10,13 @@ export class Folder extends Component<FolderType, FolderType> {
         <div class="${styles.grabber} ${DRAG_GRABBER}">
           <div class="${styles.front} folder"></div>
           <div class="${styles.back}"></div>   
-          <h3 class="title">${this.props.title}</h3>
+          <h3 class="title"></h3>
         </div>
       </div>`;
   }
 
-  // mounted() {
-  //   const titleEl = this.element.querySelector('.title');
-  //   titleEl.textContent = this.props.title;
-  // }
+  didMount(): void {
+    const titleEl = this.element.querySelector('.title');
+    titleEl.textContent = this.props.title;
+  }
 }

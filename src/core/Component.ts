@@ -8,9 +8,10 @@ export interface IComponent {
 }
 
 export default class Component<P, S> implements IComponent {
-  targetEl: HTMLElement;
-  protected state: S;
-  props: P;
+  protected readonly targetEl: HTMLElement;
+  element: HTMLElement;
+  state: S;
+  protected readonly props: P;
 
   constructor(targetEl: HTMLElement, props?: P) {
     this.targetEl = targetEl;
@@ -34,8 +35,8 @@ export default class Component<P, S> implements IComponent {
       this.targetEl.childNodes.forEach(child => this.targetEl.removeChild(child));
     }
 
-    template.content.firstElementChild &&
-      this.targetEl.insertAdjacentElement('beforeend', template.content.firstElementChild);
+    this.element = template.content.firstElementChild as HTMLElement;
+    this.element && this.targetEl.insertAdjacentElement('beforeend', this.element);
 
     this.didMount();
   }
