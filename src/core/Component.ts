@@ -1,7 +1,7 @@
 export interface IComponent {
   willMount(): void;
   template(): void;
-  render(): void;
+  render(isUpdated: boolean): void;
   didMount(): void;
   setEvent(): void;
   addEvent(eventType: string, selector: string, callback: (event: Event) => void): void;
@@ -17,7 +17,7 @@ export default class Component<P, S> implements IComponent {
     this.props = props;
     this.willMount();
     this.setEvent();
-    this.render();
+    this.render(false);
   }
 
   willMount() {}
@@ -26,11 +26,17 @@ export default class Component<P, S> implements IComponent {
     return '';
   }
 
-  render() {
+  render(isUpdated: boolean) {
     const template = document.createElement('template');
     template.innerHTML = this.template();
+
+    if (isUpdated && this.targetEl.hasChildNodes()) {
+      this.targetEl.childNodes.forEach(child => this.targetEl.removeChild(child));
+    }
+
     template.content.firstElementChild &&
       this.targetEl.insertAdjacentElement('beforeend', template.content.firstElementChild);
+
     this.didMount();
   }
 
@@ -38,7 +44,7 @@ export default class Component<P, S> implements IComponent {
 
   setState(newState: S) {
     this.state = { ...this.state, ...newState };
-    this.render();
+    this.render(true);
   }
 
   setEvent() {}

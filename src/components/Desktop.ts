@@ -74,6 +74,11 @@ export default class Desktop extends Component<DesktopProps, DesktopState> {
   didMount(): void {
     const windowRootEl = this.targetEl.querySelector('.window-root') as HTMLElement;
     const iconRootEl = this.targetEl.querySelector('.icon-root') as HTMLElement;
-    new Icons(iconRootEl, { icons: this.state.icons });
+    new Icons(iconRootEl, { icons: this.state.icons, swapIcons: this.swapIcons.bind(this) });
+  }
+
+  swapIcons(newIcons: { applications: ApplicationType[]; folders: FolderType[] }): void {
+    console.log({ ...this.state, icons: newIcons });
+    this.setState({ ...this.state, icons: newIcons });
   }
 }
