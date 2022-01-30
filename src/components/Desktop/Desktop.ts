@@ -28,7 +28,7 @@ type DesktopState = {
   windows: [];
 };
 
-export default class Desktop extends Component<DesktopProps, DesktopState> {
+export class Desktop extends Component<DesktopProps, DesktopState> {
   template() {
     return `
       <div class="${styles.desktop}">

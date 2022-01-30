@@ -14,7 +14,7 @@ type ApplicationState = ApplicationProps;
 export class Application extends Component<ApplicationProps, ApplicationState> {
   template() {
     return `
-      <div class="${styles.iconWrapper} application ${DRAG_BOX}" data-id="${this.props.id}">
+      <div class="${styles.wrapper} application ${DRAG_BOX}" data-id="${this.props.id}">
         <div class="${styles.icon} application ${DRAG_GRABBER}"></div>
         <h3 class="title">${this.props.title}</h3>
       </div>`;

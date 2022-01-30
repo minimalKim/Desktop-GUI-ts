@@ -1,4 +1,4 @@
-import Desktop from './components/Desktop';
+import { Desktop } from './components/Desktop';
 import Component from './core/Component';
 
 type AppState = {};

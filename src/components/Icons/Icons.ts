@@ -1,3 +1,4 @@
+import { Folder } from './Folder';
 import { ApplicationType, FolderType } from './../Desktop';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import Component from '@/core/Component';
@@ -19,7 +20,9 @@ type IconsState = {};
 export class Icons extends Component<IconsProps, IconsState> {
   didMount(): void {
     const { sortedIcons, targetEl } = this;
-    sortedIcons.map(icon => (icon.type === APPLICATION_LABEL ? new Application(targetEl, icon) : ''));
+    sortedIcons.map(icon =>
+      icon.type === APPLICATION_LABEL ? new Application(targetEl, icon) : new Folder(targetEl, icon)
+    );
   }
 
   setEvent(): void {
