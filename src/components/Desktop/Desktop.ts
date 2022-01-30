@@ -2,7 +2,7 @@ import { FOLDER_LABEL, APPLICATION_LABEL } from '@/utils/constants';
 import { makeId } from '@/utils/helper';
 import Component from '@/core/Component';
 import styles from './Desktop.module.css';
-import Icons from './Icons';
+import { Icons } from '../Icons';
 
 export type ApplicationType = {
   order: number;
