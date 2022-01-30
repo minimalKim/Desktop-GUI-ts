@@ -1,0 +1,26 @@
+.desktop {
+  height: 100vh;
+  padding: 4rem;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
+  font-style: italic;
+  font-weight: 600;
+
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+.iconRoot {
+  height: 100%;
+  border: 1px solid gray;
+  display: grid;
+  grid-template-columns: repeat(10, 120px);
+  grid-template-rows: repeat(auto-fill, 128px);
+  grid-auto-flow: column;
+  grid-gap: 1rem;
+}

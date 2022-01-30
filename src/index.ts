@@ -1,5 +1,5 @@
-import { test } from './components/test';
+import App from './app';
 
-export const $app = document.getElementById('app');
+const $app = document.getElementById('app');
 
-test($app, 'test!');
+new App($app);
