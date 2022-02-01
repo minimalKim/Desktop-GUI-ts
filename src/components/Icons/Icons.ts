@@ -1,8 +1,8 @@
 import { Folder } from './Folder';
 import { ApplicationType, FolderType } from './../Desktop';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
-import Component from '@/core/Component';
-import { createMouseDownHandlerForDragDrop } from '@/utils/event';
+import { Component } from '@/core/Component';
+import { clickSwitcher, createMouseDownHandlerForDragDrop } from '@/utils/event';
 import { Application } from './Application';
 
 type IconsProps = {
@@ -11,6 +11,7 @@ type IconsProps = {
     folders: FolderType[];
   };
   swapIcons: (newIcons: newIcons) => void;
+  doubleClickIcon: (title: string) => void;
 };
 
 type newIcons = { applications: ApplicationType[]; folders: FolderType[] };
@@ -26,7 +27,7 @@ export class Icons extends Component<IconsProps, IconsState> {
   }
 
   setEvent(): void {
-    const { icons, swapIcons } = this.props;
+    const { icons, swapIcons, doubleClickIcon } = this.props;
 
     const mouseDownHandler = createMouseDownHandlerForDragDrop(true, () => {
       const iconEls = this.targetEl.children;
@@ -49,7 +50,17 @@ export class Icons extends Component<IconsProps, IconsState> {
       swapIcons(newIcons);
     });
 
-    this.addEvent('mousedown', DRAG_GRABBER_SELECTOR, mouseDownHandler);
+    const doubleClickHandler = ({ target }: MouseEvent) => {
+      const targetEl = target as HTMLElement;
+      const title = targetEl.closest('[data-id]').querySelector('.title').textContent;
+      doubleClickIcon(title);
+    };
+
+    this.addEvent(
+      'mousedown',
+      (e: MouseEvent) => clickSwitcher(e, mouseDownHandler, doubleClickHandler),
+      DRAG_GRABBER_SELECTOR
+    );
   }
 
   get sortedIcons() {

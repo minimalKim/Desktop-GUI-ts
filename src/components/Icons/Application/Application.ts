@@ -1,4 +1,4 @@
-import Component from '@/core/Component';
+import { Component } from '@/core/Component';
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
 import styles from './Application.module.css';
 
@@ -14,8 +14,8 @@ type ApplicationState = ApplicationProps;
 export class Application extends Component<ApplicationProps, ApplicationState> {
   template() {
     return `
-      <div class="${styles.wrapper} application ${DRAG_BOX}" data-id="${this.props.id}">
-        <div class="${styles.icon} application ${DRAG_GRABBER}"></div>
+      <div class="${styles.wrapper} ${DRAG_BOX} application" data-id="${this.props.id}">
+        <div class="${styles.icon} ${DRAG_GRABBER}"></div>
         <h3 class="title"></h3>
       </div>`;
   }

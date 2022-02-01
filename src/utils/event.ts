@@ -112,3 +112,19 @@ export function createMouseDownHandlerForDragDrop(
     document.addEventListener('mouseup', mouseUpHandler);
   };
 }
+
+export const clickSwitcher = (function () {
+  const delay = 100;
+  let clickTimer = setTimeout(() => {}, 0);
+
+  function _switch(
+    e: MouseEvent,
+    simpleClickHandler: (e: MouseEvent) => void,
+    doubleClickHandler: (e: MouseEvent) => void
+  ) {
+    clearTimeout(clickTimer);
+    if (e.detail === 2) doubleClickHandler(e);
+    else clickTimer = setTimeout(simpleClickHandler, delay, e);
+  }
+  return _switch;
+})();

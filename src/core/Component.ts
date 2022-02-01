@@ -4,13 +4,13 @@ export interface IComponent {
   render(isUpdated: boolean): void;
   didMount(): void;
   setEvent(): void;
-  addEvent(eventType: string, selector: string, callback: (event: Event) => void): void;
+  addEvent(eventType: string, callback: (event: Event) => void, selector?: string): void;
 }
 
-export default class Component<P, S> implements IComponent {
+export class Component<P, S> implements IComponent {
   protected readonly targetEl: HTMLElement;
-  element: HTMLElement;
-  state: S;
+  protected element: HTMLElement;
+  protected state: S;
   protected readonly props: P;
 
   constructor(targetEl: HTMLElement, props?: P) {
@@ -50,13 +50,13 @@ export default class Component<P, S> implements IComponent {
 
   setEvent() {}
 
-  addEvent(eventType: string, selector: string, callback: (event: Event) => void) {
+  addEvent(eventType: string, callback: (event: Event) => void, selector?: string) {
     const hasClosest = (target: EventTarget) => {
       const eventTargetEl = target as HTMLElement;
       return !!eventTargetEl.closest(selector);
     };
     this.targetEl.addEventListener(eventType, event => {
-      if (!hasClosest(event.target)) return false;
+      if (selector && !hasClosest(event.target)) return;
       callback(event);
     });
   }

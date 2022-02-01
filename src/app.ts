@@ -1,5 +1,5 @@
 import { Desktop } from './components/Desktop';
-import Component from './core/Component';
+import { Component } from './core/Component';
 
 type AppState = {};
 type AppProps = {};

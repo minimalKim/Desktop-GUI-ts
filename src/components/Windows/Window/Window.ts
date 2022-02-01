@@ -1,13 +1,13 @@
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
-import Component from '@/core/Component';
+import { Component } from '@/core/Component';
 import styles from './Window.module.css';
 
 export type WindowType = {
   id: string;
   title: string;
   type: string;
-  order: number;
   position: { x: number; y: number };
+  isSelected: boolean;
 };
 
 export class Window extends Component<WindowType, WindowType> {
@@ -26,6 +26,7 @@ export class Window extends Component<WindowType, WindowType> {
 
   didMount(): void {
     this.element.style.position = 'absolute';
+    this.element.style.zIndex = this.props.isSelected ? '5' : '1';
     this.element.style.top = `${this.props.position.y}px`;
     this.element.style.left = `${this.props.position.x}px`;
   }

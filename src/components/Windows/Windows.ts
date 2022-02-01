@@ -1,5 +1,5 @@
 import { WindowType, Window } from './Window';
-import Component from '@/core/Component';
+import { Component } from '@/core/Component';
 import { createMouseDownHandlerForDragDrop } from '@/utils/event';
 import { DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 
@@ -8,6 +8,7 @@ type WindowsProps = {
   closeWindow: (id: string) => void;
   dragWindow: (id: string, draggingWindowState: WindowType) => void;
 };
+
 type WindowsState = {};
 
 export class Windows extends Component<WindowsProps, WindowsState> {
@@ -19,10 +20,11 @@ export class Windows extends Component<WindowsProps, WindowsState> {
 
   setEvent(): void {
     const { closeWindow, dragWindow } = this.props;
+
     const closeHandler = ({ target }: MouseEvent) => {
       const targetEl = target as HTMLElement;
-      const windowEl = targetEl.closest('.window') as HTMLElement;
-      closeWindow(windowEl.dataset.id);
+      const id = (targetEl.closest('[data-id]') as HTMLElement).dataset.id;
+      closeWindow(id);
     };
 
     const mouseDownHandler = createMouseDownHandlerForDragDrop(false, ({ position, draggingElId }) => {
@@ -30,7 +32,7 @@ export class Windows extends Component<WindowsProps, WindowsState> {
       dragWindow(draggingElId, { ...draggingWindowState, position });
     });
 
-    this.addEvent('mousedown', DRAG_GRABBER_SELECTOR, mouseDownHandler);
-    this.addEvent('click', '.close', closeHandler);
+    this.addEvent('click', closeHandler, '.close');
+    this.addEvent('mousedown', mouseDownHandler, DRAG_GRABBER_SELECTOR);
   }
 }
