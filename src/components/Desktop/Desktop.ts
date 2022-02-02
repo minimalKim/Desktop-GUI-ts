@@ -64,6 +64,8 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
   }
 
   didMount(): void {
+    //this.element.style.backgroundImage = DesktopBackgroundImageDataURI;
+
     const windowRootEl = this.element.querySelector('.window-root') as HTMLElement;
     new Windows(windowRootEl, {
       windows: this.state.windows,

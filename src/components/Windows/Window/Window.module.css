@@ -1,34 +1,50 @@
 .container {
   background-color: gray;
   position: absolute;
-  padding: 0 1rem 1rem 1rem;
   z-index: 1;
+  min-width: 180px;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.625rem;
+  background-color: #f6f6f6;
+  overflow: hidden;
+  box-shadow: 0 25px 30px rgba(0, 0, 0, 0.35);
 }
 
 .header {
-  height: 2rem;
-  cursor: grab;
+  padding: 0.425rem;
   user-select: none;
-  background-color: red;
+  background-color: #fff;
   display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  font-weight: 700;
+  cursor: grab;
 }
 
 .window h3 {
-  background-color: greenyellow;
-  margin: 0 auto;
+  font-weight: 400;
 }
 
 .close {
-  /**/
+  background-color: #ff5e57;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.2rem;
+  border-radius: 0.4rem;
+  border: #e74c44;
+  cursor: pointer;
+}
+.close:hover {
+  background-color: #eb453c;
 }
 
-.spacer {
+.grabber {
   width: 100%;
-  background-color: pink;
+  height: 1rem;
+  text-align: center;
 }
 
 .innerWrapper {
-  height: 200px;
-  width: 400px;
-  background-color: green;
+  min-height: 200px;
+  min-width: 400px;
 }

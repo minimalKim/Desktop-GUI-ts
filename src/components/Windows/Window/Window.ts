@@ -10,9 +10,10 @@ export class Window extends StatelessComponent<WindowProps> {
     return `
       <div class="${styles.container} window ${DRAG_BOX}" data-id="${this.props.id}">
         <div class="${styles.header}">
-        <button class="${styles.close} close">X</button>
-          <span class="${styles.spacer} ${DRAG_GRABBER}" ></span>
-          <h3 class="title">${this.props.title}</h3>
+        <button class="${styles.close} close"></button>
+          <div class="${styles.grabber} ${DRAG_GRABBER}">
+            <h3 class="title">${this.props.title}</h3>
+          </div>
         </div>
         <div class="${styles.innerWrapper}"></div>
       </div>

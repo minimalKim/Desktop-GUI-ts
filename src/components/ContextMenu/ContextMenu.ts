@@ -17,8 +17,7 @@ export class ContextMenu extends StatelessComponent<ContextMenuProps> {
             this.props.contextMenu.isIconClicked
               ? `<li class="delete">Delete</li>`
               : `<li class="new-folder">New Folder</li>
-                  <li class="reload">ReLoad</li>
-                  <li>More info...</li>`
+                  <li class="reload">Reload</li>`
           }
         </ul>
       </div>`;

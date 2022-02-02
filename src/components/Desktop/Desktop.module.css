@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
 .desktop {
   height: 100vh;
   padding: 4rem;
   box-sizing: border-box;
-  border: 1px solid gray;
-  font-family: 'IBM Plex Sans KR', sans-serif;
-  font-family: 'Titillium Web', sans-serif;
-  font-style: italic;
-  font-weight: 600;
+  background-image: url('../../img/Desktop.png');
+  background-size: cover;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #3d3d3d;
 
   -ms-user-select: none;
   -moz-user-select: -moz-none;
@@ -17,10 +19,9 @@
 
 .iconRoot {
   height: 100%;
-  border: 1px solid gray;
   display: grid;
-  grid-template-columns: repeat(10, 120px);
-  grid-template-rows: repeat(auto-fill, 80px);
+  grid-template-columns: repeat(10, 112px);
+  grid-template-rows: repeat(auto-fill, 94px);
   grid-auto-flow: column;
-  grid-gap: 1rem;
+  grid-gap: 0.25rem;
 }
