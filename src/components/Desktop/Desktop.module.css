@@ -20,7 +20,7 @@
   border: 1px solid gray;
   display: grid;
   grid-template-columns: repeat(10, 120px);
-  grid-template-rows: repeat(auto-fill, 128px);
+  grid-template-rows: repeat(auto-fill, 80px);
   grid-auto-flow: column;
   grid-gap: 1rem;
 }

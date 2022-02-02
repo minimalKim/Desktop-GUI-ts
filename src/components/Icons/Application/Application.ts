@@ -1,17 +1,11 @@
-import { Component } from '@/core/Component';
+import { StatelessComponent } from '@/core/Component';
+import { IApplicationIcon } from '@/types';
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
 import styles from './Application.module.css';
 
-type ApplicationProps = {
-  order: number;
-  type: string;
-  title: string;
-  id: string;
-};
+type ApplicationProps = IApplicationIcon;
 
-type ApplicationState = ApplicationProps;
-
-export class Application extends Component<ApplicationProps, ApplicationState> {
+export class Application extends StatelessComponent<ApplicationProps> {
   template() {
     return `
       <div class="${styles.wrapper} ${DRAG_BOX} application" data-id="${this.props.id}">

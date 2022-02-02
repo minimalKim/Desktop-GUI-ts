@@ -1,20 +1,14 @@
-import { Component } from '@/core/Component';
+import { StatelessComponent } from '@/core/Component';
+import { IContextMenu } from '@/types';
 import styles from './ContextMenu.module.css';
 
 type ContextMenuProps = {
-  contextMenu: {
-    isVisible: boolean;
-    isIconClicked: boolean;
-    position: { x: number; y: number };
-    iconId: string | null;
-  };
+  contextMenu: IContextMenu;
   deleteIcon: (id: string) => void;
   createFolder: () => void;
 };
 
-type ContextMenuState = {};
-
-export class ContextMenu extends Component<ContextMenuProps, ContextMenuState> {
+export class ContextMenu extends StatelessComponent<ContextMenuProps> {
   template() {
     return `
       <div class="context-menu ${styles.wrapper}" >

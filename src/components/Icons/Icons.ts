@@ -1,24 +1,17 @@
+import { IconsType } from '@/types/index';
 import { Folder } from './Folder';
-import { ApplicationType, FolderType } from './../Desktop';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
-import { Component } from '@/core/Component';
+import { StatelessComponent } from '@/core/Component';
 import { clickSwitcher, createMouseDownHandlerForDragDrop } from '@/utils/event';
 import { Application } from './Application';
 
 type IconsProps = {
-  icons: {
-    applications: ApplicationType[];
-    folders: FolderType[];
-  };
-  swapIcons: (newIcons: newIcons) => void;
+  icons: IconsType;
+  swapIcons: (newIcons: IconsType) => void;
   doubleClickIcon: (title: string) => void;
 };
 
-type newIcons = { applications: ApplicationType[]; folders: FolderType[] };
-
-type IconsState = {};
-
-export class Icons extends Component<IconsProps, IconsState> {
+export class Icons extends StatelessComponent<IconsProps> {
   willMount(): void {
     const { sortedIcons, targetEl } = this;
     sortedIcons.map(icon =>
@@ -31,7 +24,7 @@ export class Icons extends Component<IconsProps, IconsState> {
 
     const mouseDownHandler = createMouseDownHandlerForDragDrop(true, () => {
       const iconEls = this.targetEl.children;
-      const newIcons: newIcons = { applications: [], folders: [] };
+      const newIcons: IconsType = { applications: [], folders: [] };
 
       Array.from(iconEls).map((iconEl, idx) => {
         const itemId = (iconEl as HTMLElement).dataset.id;

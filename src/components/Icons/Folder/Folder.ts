@@ -1,22 +1,28 @@
-import { FolderType } from './../../Desktop/Desktop';
+import { StatelessComponent } from '@/core/Component';
+import { IFolderIcon } from '@/types/index';
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
-import { Component } from '@/core/Component';
+import { folderIconDataURI } from './image';
 import styles from './Folder.module.css';
 
-export class Folder extends Component<FolderType, FolderType> {
+type FolderProps = IFolderIcon;
+
+export class Folder extends StatelessComponent<FolderProps> {
   template() {
     return `
       <div class="${styles.wrapper} ${DRAG_BOX} folder" data-id="${this.props.id}">
         <div class="${styles.grabber} ${DRAG_GRABBER}">
-          <div class="${styles.front}"></div>
-          <div class="${styles.back}"></div>   
-          <h3 class="title"></h3>
+          <img alt="folder-icon" >
         </div>
+        <h3 class="title"></h3>
       </div>`;
   }
 
   didMount(): void {
     const titleEl = this.element.querySelector('.title');
     titleEl.textContent = this.props.title;
+
+    const imgEl = this.element.querySelector('img');
+    imgEl.ondragstart = () => false;
+    imgEl.src = folderIconDataURI;
   }
 }

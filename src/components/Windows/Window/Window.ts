@@ -1,16 +1,11 @@
+import { IWindow } from '@/types/index';
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
-import { Component } from '@/core/Component';
+import { StatelessComponent } from '@/core/Component';
 import styles from './Window.module.css';
 
-export type WindowType = {
-  id: string;
-  title: string;
-  type: string;
-  position: { x: number; y: number };
-  isSelected: boolean;
-};
+type WindowProps = IWindow;
 
-export class Window extends Component<WindowType, WindowType> {
+export class Window extends StatelessComponent<WindowProps> {
   template() {
     return `
       <div class="${styles.container} window ${DRAG_BOX}" data-id="${this.props.id}">

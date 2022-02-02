@@ -1,43 +1,20 @@
+import { IconsType, IContextMenu, IWindow } from '@/types';
 import { ContextMenu } from './../ContextMenu/ContextMenu';
 import { Windows } from './../Windows/Windows';
 import { FOLDER_LABEL, APPLICATION_LABEL, DRAG_GRABBER_SELECTOR, WINDOW_LABEL } from '@/utils/constants';
 import { makeId } from '@/utils/helper';
-import { Component } from '@/core/Component';
 import { Icons } from '../Icons';
-import { WindowType, Window } from '../Windows';
 import styles from './Desktop.module.css';
-
-export type ApplicationType = {
-  order: number;
-  type: string;
-  title: string;
-  id: string;
-};
-
-export type FolderType = {
-  order: number;
-  type: string;
-  title: string;
-  id: string;
-  children?: Array<FolderType | ApplicationType>;
-};
+import { StatefulComponent } from '@/core/Component';
 
 type DesktopProps = {};
 type DesktopState = {
-  icons: {
-    applications: ApplicationType[];
-    folders: FolderType[];
-  };
-  contextMenu: {
-    isVisible: boolean;
-    isIconClicked: boolean;
-    iconId: string | null;
-    position: { x: number; y: number };
-  };
-  windows?: WindowType[];
+  icons: IconsType;
+  contextMenu: IContextMenu;
+  windows?: IWindow[];
 };
 
-export class Desktop extends Component<DesktopProps, DesktopState> {
+export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
   template() {
     return `
       <div class="${styles.desktop}">
@@ -50,9 +27,9 @@ export class Desktop extends Component<DesktopProps, DesktopState> {
     this.state = {
       icons: {
         applications: [
-          { order: 0, type: APPLICATION_LABEL, title: 'Todo', id: makeId() },
-          { order: 1, type: APPLICATION_LABEL, title: '2', id: makeId() },
-          { order: 2, type: APPLICATION_LABEL, title: '3', id: makeId() },
+          { order: 0, type: APPLICATION_LABEL, title: 'Github', id: makeId() },
+          { order: 1, type: APPLICATION_LABEL, title: 'Notion', id: makeId() },
+          { order: 2, type: APPLICATION_LABEL, title: 'Todo', id: makeId() },
         ],
         folders: [
           {
@@ -182,7 +159,7 @@ export class Desktop extends Component<DesktopProps, DesktopState> {
     });
   }
 
-  swapIcons(newIcons: { applications: ApplicationType[]; folders: FolderType[] }): void {
+  swapIcons(newIcons: IconsType): void {
     this.setState({ ...this.state, icons: newIcons });
   }
 
@@ -225,7 +202,7 @@ export class Desktop extends Component<DesktopProps, DesktopState> {
     });
   }
 
-  dragWindow(id: string, draggingWindowState: WindowType): void {
+  dragWindow(id: string, draggingWindowState: IWindow): void {
     const windows = [...this.state.windows] || [];
     windows.map(window => (window.isSelected = false));
     draggingWindowState.isSelected = true;

@@ -7,10 +7,13 @@ export interface IComponent {
   addEvent(eventType: string, callback: (event: Event) => void, selector?: string): void;
 }
 
-export class Component<P, S> implements IComponent {
+export interface IStatefulComponent<S> extends IComponent {
+  setState(newState: S): void;
+}
+
+export class StatelessComponent<P> implements IComponent {
   protected readonly targetEl: HTMLElement;
   protected element: HTMLElement;
-  protected state: S;
   protected readonly props: P;
 
   constructor(targetEl: HTMLElement, props?: P) {
@@ -43,11 +46,6 @@ export class Component<P, S> implements IComponent {
 
   didMount() {}
 
-  setState(newState: S) {
-    this.state = { ...this.state, ...newState };
-    this.render(true);
-  }
-
   setEvent() {}
 
   addEvent(eventType: string, callback: (event: Event) => void, selector?: string) {
@@ -59,5 +57,14 @@ export class Component<P, S> implements IComponent {
       if (selector && !hasClosest(event.target)) return;
       callback(event);
     });
+  }
+}
+
+export class StatefulComponent<P, S> extends StatelessComponent<P> implements IStatefulComponent<S> {
+  protected state: S;
+
+  setState(newState: S) {
+    this.state = { ...this.state, ...newState };
+    this.render(true);
   }
 }

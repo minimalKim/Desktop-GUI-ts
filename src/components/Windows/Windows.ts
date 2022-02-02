@@ -1,17 +1,16 @@
-import { WindowType, Window } from './Window';
-import { Component } from '@/core/Component';
+import { Window } from './Window';
 import { createMouseDownHandlerForDragDrop } from '@/utils/event';
 import { DRAG_GRABBER_SELECTOR } from '@/utils/constants';
+import { StatelessComponent } from '@/core/Component';
+import { IWindow } from '@/types';
 
 type WindowsProps = {
-  windows: WindowType[];
+  windows: IWindow[];
   closeWindow: (id: string) => void;
-  dragWindow: (id: string, draggingWindowState: WindowType) => void;
+  dragWindow: (id: string, draggingWindowState: IWindow) => void;
 };
 
-type WindowsState = {};
-
-export class Windows extends Component<WindowsProps, WindowsState> {
+export class Windows extends StatelessComponent<WindowsProps> {
   willMount(): void {
     this.props.windows.map(window => {
       new Window(this.targetEl, window);

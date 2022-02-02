@@ -1,10 +1,10 @@
 import { Desktop } from './components/Desktop';
-import { Component } from './core/Component';
+import { StatefulComponent } from './core/Component';
 
 type AppState = {};
 type AppProps = {};
 
-export default class App extends Component<AppProps, AppState> {
+export default class App extends StatefulComponent<AppProps, AppState> {
   template() {
     return `
       <main id="desktop"></main>
