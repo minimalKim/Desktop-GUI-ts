@@ -1,7 +1,7 @@
 import { IconsType, IContextMenu, IWindow } from '@/types';
 import { ContextMenu } from './../ContextMenu/ContextMenu';
 import { Windows } from './../Windows/Windows';
-import { FOLDER_LABEL, APPLICATION_LABEL, DRAG_GRABBER_SELECTOR, WINDOW_LABEL, LINK_LABEL } from '@/utils/constants';
+import { FOLDER_LABEL, APPLICATION_LABEL, WINDOW_LABEL, LINK_LABEL } from '@/utils/constants';
 import { makeId } from '@/utils/helper';
 import { Icons } from '../Icons';
 import styles from './Desktop.module.css';
@@ -27,13 +27,13 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
     this.state = {
       icons: {
         links: [
-          { order: 0, type: LINK_LABEL, title: 'Github', id: makeId(), url: '' },
+          { order: 0, type: LINK_LABEL, title: 'Github', id: makeId(), url: process.env.GITHUB_URL },
           {
             order: 1,
             type: LINK_LABEL,
             title: 'Notion',
             id: makeId(),
-            url: '',
+            url: process.env.NOTION_URL,
           },
         ],
         applications: [{ order: 2, type: APPLICATION_LABEL, title: 'Todo', id: makeId() }],
@@ -80,7 +80,9 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
       const targetEl = e.target as HTMLElement;
       const position = { x: e.clientX, y: e.clientY };
       const dataIdEl = targetEl.closest('[data-id]') as HTMLElement;
-      const isIconClicked = dataIdEl?.classList.contains('folder') || dataIdEl?.classList.contains('application');
+      const isIconClicked = [FOLDER_LABEL, APPLICATION_LABEL, LINK_LABEL].some(className =>
+        dataIdEl?.classList.contains(className)
+      );
       const iconId = isIconClicked ? dataIdEl.dataset.id : null;
 
       this.openContextMenu(position, isIconClicked, iconId);
@@ -91,6 +93,7 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
 
   openContextMenu(position: { x: number; y: number }, isIconClicked: boolean, iconId: string | null) {
     const contextMenu = { ...this.state.contextMenu };
+
     this.setState({
       ...this.state,
       contextMenu: {
@@ -120,7 +123,7 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
 
   createFolder() {
     const folders = [...this.state.icons.folders];
-    console.log(this.state);
+
     this.setState({
       ...this.state,
       icons: {
