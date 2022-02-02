@@ -1,7 +1,7 @@
 import { IconsType, IContextMenu, IWindow } from '@/types';
 import { ContextMenu } from './../ContextMenu/ContextMenu';
 import { Windows } from './../Windows/Windows';
-import { FOLDER_LABEL, APPLICATION_LABEL, DRAG_GRABBER_SELECTOR, WINDOW_LABEL } from '@/utils/constants';
+import { FOLDER_LABEL, APPLICATION_LABEL, DRAG_GRABBER_SELECTOR, WINDOW_LABEL, LINK_LABEL } from '@/utils/constants';
 import { makeId } from '@/utils/helper';
 import { Icons } from '../Icons';
 import styles from './Desktop.module.css';
@@ -26,31 +26,20 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
   willMount(): void {
     this.state = {
       icons: {
-        applications: [
-          { order: 0, type: APPLICATION_LABEL, title: 'Github', id: makeId() },
-          { order: 1, type: APPLICATION_LABEL, title: 'Notion', id: makeId() },
-          { order: 2, type: APPLICATION_LABEL, title: 'Todo', id: makeId() },
-        ],
-        folders: [
+        links: [
+          { order: 0, type: LINK_LABEL, title: 'Github', id: makeId(), url: '' },
           {
-            order: 3,
-            type: FOLDER_LABEL,
-            title: '4',
+            order: 1,
+            type: LINK_LABEL,
+            title: 'Notion',
             id: makeId(),
-            children: [
-              {
-                order: 0,
-                type: FOLDER_LABEL,
-                title: '7',
-                id: makeId(),
-                children: [{ order: 0, type: APPLICATION_LABEL, title: '8', id: makeId() }],
-              },
-            ],
+            url: '',
           },
-          { order: 4, type: FOLDER_LABEL, title: '5', id: makeId() },
-          { order: 5, type: FOLDER_LABEL, title: '6', id: makeId() },
-          { order: 6, type: FOLDER_LABEL, title: '7', id: makeId() },
-          { order: 7, type: FOLDER_LABEL, title: '8', id: makeId() },
+        ],
+        applications: [{ order: 2, type: APPLICATION_LABEL, title: 'Todo', id: makeId() }],
+        folders: [
+          { order: 3, type: FOLDER_LABEL, title: 'folder 1', id: makeId() },
+          { order: 4, type: FOLDER_LABEL, title: 'folder 2', id: makeId() },
         ],
       },
       contextMenu: {
@@ -64,8 +53,6 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
   }
 
   didMount(): void {
-    //this.element.style.backgroundImage = DesktopBackgroundImageDataURI;
-
     const windowRootEl = this.element.querySelector('.window-root') as HTMLElement;
     new Windows(windowRootEl, {
       windows: this.state.windows,
@@ -119,10 +106,12 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
   deleteIcon(id: string) {
     const applications = [...this.state.icons.applications];
     const folders = [...this.state.icons.folders];
+    const links = [...this.state.icons.links];
 
     this.setState({
       ...this.state,
       icons: {
+        links: links.filter(link => link.id !== id),
         applications: applications.filter(application => application.id !== id),
         folders: folders.filter(folder => folder.id !== id),
       },

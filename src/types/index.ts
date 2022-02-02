@@ -10,6 +10,10 @@ export interface IWindow extends BaseUI {
   position: Position;
 }
 
+export interface ILinkIcon extends Icon {
+  url: string;
+}
+
 export interface IApplicationIcon extends Icon {}
 
 export interface IFolderIcon extends Icon {
@@ -26,7 +30,7 @@ interface BaseUI {
   type: string;
 }
 
-export type IconsType = { applications: IApplicationIcon[]; folders: IFolderIcon[] };
+export type IconsType = { links: ILinkIcon[]; applications: IApplicationIcon[]; folders: IFolderIcon[] };
 
 export type Position = {
   x: number;

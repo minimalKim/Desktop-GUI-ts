@@ -1,6 +1,7 @@
-export const WINDOW_LABEL = 'WINDOW';
-export const FOLDER_LABEL = 'FOLDER';
-export const APPLICATION_LABEL = 'APPLICATION';
+export const WINDOW_LABEL = 'window';
+export const FOLDER_LABEL = 'folder';
+export const APPLICATION_LABEL = 'application';
+export const LINK_LABEL = 'link';
 
 // For drag n drop
 export const DRAG_BOX = 'drag-box';

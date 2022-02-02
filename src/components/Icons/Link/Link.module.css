@@ -1,5 +1,4 @@
 .wrapper {
-  padding-top: 0.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,11 +13,11 @@
 } */
 
 .wrapper h3 {
-  margin: 0.2rem;
+  margin: 0.1rem;
   padding-right: 4px;
   text-align: center;
 }
 
 .wrapper img {
-  width: 60px;
+  width: 70px;
 }

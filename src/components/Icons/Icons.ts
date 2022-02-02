@@ -1,4 +1,6 @@
-import { IconsType } from '@/types/index';
+import { Link } from './Link/Link';
+import { FOLDER_LABEL, LINK_LABEL } from './../../utils/constants';
+import { IconsType, ILinkIcon } from '@/types/index';
 import { Folder } from './Folder';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import { StatelessComponent } from '@/core/Component';
@@ -14,9 +16,17 @@ type IconsProps = {
 export class Icons extends StatelessComponent<IconsProps> {
   willMount(): void {
     const { sortedIcons, targetEl } = this;
-    sortedIcons.map(icon =>
-      icon.type === APPLICATION_LABEL ? new Application(targetEl, icon) : new Folder(targetEl, icon)
-    );
+
+    sortedIcons.map(icon => {
+      switch (icon.type) {
+        case APPLICATION_LABEL:
+          return new Application(targetEl, icon);
+        case FOLDER_LABEL:
+          return new Folder(targetEl, icon);
+        case LINK_LABEL:
+          return new Link(targetEl, icon as ILinkIcon);
+      }
+    });
   }
 
   setEvent(): void {
@@ -24,19 +34,25 @@ export class Icons extends StatelessComponent<IconsProps> {
 
     const mouseDownHandler = createMouseDownHandlerForDragDrop(true, () => {
       const iconEls = this.targetEl.children;
-      const newIcons: IconsType = { applications: [], folders: [] };
+      const newIcons: IconsType = { applications: [], folders: [], links: [] };
 
       Array.from(iconEls).map((iconEl, idx) => {
         const itemId = (iconEl as HTMLElement).dataset.id;
-        const isApplication = iconEl.classList.contains('application');
+
+        const isApplication = iconEl.classList.contains(APPLICATION_LABEL);
+        const isLink = iconEl.classList.contains(LINK_LABEL);
 
         const matchedItemState = isApplication
           ? icons.applications.find(application => application.id === itemId)
+          : isLink
+          ? icons.links.find(link => link.id === itemId)
           : icons.folders.find(folder => folder.id === itemId);
         if (!matchedItemState) return;
 
         isApplication
           ? newIcons.applications.push({ ...matchedItemState, order: idx + 1 })
+          : isLink
+          ? newIcons.links.push({ ...(matchedItemState as ILinkIcon), order: idx + 1 })
           : newIcons.folders.push({ ...matchedItemState, order: idx + 1 });
       });
 
@@ -57,7 +73,7 @@ export class Icons extends StatelessComponent<IconsProps> {
   }
 
   get sortedIcons() {
-    const icons = [...this.props.icons.applications, ...this.props.icons.folders];
+    const icons = [...this.props.icons.applications, ...this.props.icons.folders, ...this.props.icons.links];
     return icons.sort((a, b) => a.order - b.order);
   }
 }
