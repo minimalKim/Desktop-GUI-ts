@@ -29,5 +29,11 @@ export class LinkIcon extends StatelessComponent<LinkIconProps> {
     const imgEl = this.element.querySelector('img');
     imgEl.ondragstart = () => false;
     imgEl.src = this.props.title === 'Github' ? GithubIconDataURI : notionIconDataURI;
+
+    const { top, right, bottom, left } = this.element.getBoundingClientRect();
+    this.element.dataset.top = top.toString();
+    this.element.dataset.right = right.toString();
+    this.element.dataset.bottom = bottom.toString();
+    this.element.dataset.left = left.toString();
   }
 }

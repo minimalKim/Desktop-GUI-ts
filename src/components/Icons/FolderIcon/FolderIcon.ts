@@ -24,5 +24,11 @@ export class FolderIcon extends StatelessComponent<FolderIconProps> {
     const imgEl = this.element.querySelector('img');
     imgEl.ondragstart = () => false;
     imgEl.src = folderIconDataURI;
+
+    const { top, right, bottom, left } = this.element.getBoundingClientRect();
+    this.element.dataset.top = top.toString();
+    this.element.dataset.right = right.toString();
+    this.element.dataset.bottom = bottom.toString();
+    this.element.dataset.left = left.toString();
   }
 }

@@ -15,27 +15,27 @@ export function createMouseDownHandlerForDragDrop(
   mouseUpCallback?: ({ position, draggingElId }: mouseUpCallbackProps) => void
 ) {
   let draggingEl: HTMLElement = null;
+  let targetEl: HTMLElement = null;
   let placeholderEl: HTMLElement = null;
   let isDraggingStarted = false;
   let position: Position = { x: 0, y: 0 };
+  let insertPosition: 'afterend' | 'beforebegin' = 'afterend';
 
-  const swap = function (nodeA: Element, nodeB: Element) {
-    const parentA = nodeA.parentNode;
-    const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
-    nodeB.parentNode.insertBefore(nodeA, nodeB);
-    parentA.insertBefore(nodeB, siblingA);
-  };
-
-  const isAbove = function (nodeA: Element, nodeB: Element) {
-    // Get the bounding rectangle of nodes
+  const isOver = function (nodeA: Element, nodeB: Element) {
     const rectA = nodeA.getBoundingClientRect();
     const rectB = nodeB.getBoundingClientRect();
-    return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+    return rectA.top + rectA.height / 2 > rectB.top + rectB.height / 2;
   };
 
+  function isDifferentEl(elementA: HTMLElement, elementB: HTMLElement) {
+    return elementA?.dataset.id !== elementB?.dataset.id;
+  }
+
   const mouseUpHandler = function (e: MouseEvent) {
-    // Remove the placeholder
     if (needSwap) {
+      if (!isDifferentEl(targetEl, draggingEl)) return;
+      targetEl?.insertAdjacentElement(insertPosition, draggingEl);
+
       placeholderEl?.parentNode?.removeChild(placeholderEl);
       draggingEl.style.removeProperty('top');
       draggingEl.style.removeProperty('left');
@@ -56,8 +56,35 @@ export function createMouseDownHandlerForDragDrop(
     document.removeEventListener('mouseup', mouseUpHandler);
   };
 
-  function mouseMoveHandler(e: MouseEvent) {
+  const mouseMoveHandler = (e: MouseEvent) => {
     const draggingRect = draggingEl.getBoundingClientRect();
+
+    const newTargetEl = Array.from(document.querySelectorAll(DRAG_BOX_SELECTOR)).find(el => {
+      const { top, right, bottom, left } = (el as HTMLElement).dataset;
+      return e.clientY > +top && e.clientX < +right && e.clientY < +bottom && e.clientX > +left;
+    }) as HTMLElement;
+
+    if (isDifferentEl(targetEl, newTargetEl) && isDifferentEl(draggingEl, newTargetEl)) {
+      if (targetEl) {
+        targetEl.style.border = '2px solid transparent';
+        targetEl.style.backgroundColor = 'transparent';
+      }
+      targetEl = newTargetEl as HTMLElement;
+    }
+
+    if (targetEl && isOver(draggingEl, targetEl)) {
+      targetEl.style.borderTop = '2px solid transparent';
+      targetEl.style.borderBottom = '2px solid rgba(255, 255, 255, 0.7)';
+      targetEl.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+      insertPosition = 'afterend';
+    }
+
+    if (targetEl && !isOver(draggingEl, targetEl)) {
+      targetEl.style.borderBottom = '2px solid transparent';
+      targetEl.style.borderTop = '2px solid rgba(255, 255, 255, 0.7)';
+      targetEl.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+      insertPosition = 'beforebegin';
+    }
 
     if (!isDraggingStarted) {
       isDraggingStarted = true;
@@ -73,23 +100,7 @@ export function createMouseDownHandlerForDragDrop(
     draggingEl.style.position = 'absolute';
     draggingEl.style.top = `${e.pageY - position.y}px`;
     draggingEl.style.left = `${e.pageX - position.x}px`;
-
-    if (!needSwap) return;
-
-    const prevEle = draggingEl.previousElementSibling;
-    const nextEle = placeholderEl.nextElementSibling;
-
-    if (prevEle && isAbove(draggingEl, prevEle)) {
-      swap(placeholderEl, draggingEl);
-      swap(placeholderEl, prevEle);
-      return;
-    }
-
-    if (nextEle && isAbove(nextEle, draggingEl)) {
-      swap(nextEle, placeholderEl);
-      swap(nextEle, draggingEl);
-    }
-  }
+  };
 
   return function mouseDownHandler(e: MouseEvent) {
     let isRightButton = false;
@@ -104,7 +115,6 @@ export function createMouseDownHandlerForDragDrop(
     const target = e.target as HTMLElement;
     draggingEl = target.closest(DRAG_BOX_SELECTOR);
 
-    // Calculate the mouse position
     const rect = draggingEl.getBoundingClientRect();
     position = { x: e.pageX - rect.left, y: e.pageY - rect.top };
 
@@ -114,7 +124,7 @@ export function createMouseDownHandlerForDragDrop(
 }
 
 export const clickSwitcher = (function () {
-  const delay = 100;
+  const delay = 200;
   let clickTimer = setTimeout(() => {}, 0);
 
   function _switch(

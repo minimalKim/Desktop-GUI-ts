@@ -17,5 +17,11 @@ export class ApplicationIcon extends StatelessComponent<ApplicationIconProps> {
   didMount(): void {
     const titleEl = this.element.querySelector('.title');
     titleEl.textContent = this.props.title;
+
+    const { top, right, bottom, left } = this.element.getBoundingClientRect();
+    this.element.dataset.top = top.toString();
+    this.element.dataset.right = right.toString();
+    this.element.dataset.bottom = bottom.toString();
+    this.element.dataset.left = left.toString();
   }
 }

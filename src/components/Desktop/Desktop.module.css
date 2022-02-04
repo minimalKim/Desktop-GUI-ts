@@ -32,5 +32,4 @@ a:hover {
   grid-template-columns: repeat(10, 112px);
   grid-template-rows: repeat(auto-fill, 108px);
   grid-auto-flow: column;
-  grid-gap: 0.25rem;
 }
