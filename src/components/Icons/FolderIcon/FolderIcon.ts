@@ -2,11 +2,11 @@ import { StatelessComponent } from '@/core/Component';
 import { IFolderIcon } from '@/types/index';
 import { DRAG_BOX, DRAG_GRABBER, FOLDER_LABEL } from '@/utils/constants';
 import { folderIconDataURI } from './image';
-import styles from './Folder.module.css';
+import styles from './FolderIcon.module.css';
 
-type FolderProps = IFolderIcon;
+type FolderIconProps = IFolderIcon;
 
-export class Folder extends StatelessComponent<FolderProps> {
+export class FolderIcon extends StatelessComponent<FolderIconProps> {
   template() {
     return `
       <div class="${styles.wrapper} ${DRAG_BOX} ${FOLDER_LABEL}" data-id="${this.props.id}">

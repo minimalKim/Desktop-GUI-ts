@@ -1,11 +1,11 @@
-import { Link } from './Link/Link';
+import { LinkIcon } from './LinkIcon/LinkIcon';
+import { FolderIcon } from './FolderIcon/FolderIcon';
+import { ApplicationIcon } from './ApplicationIcon/ApplicationIcon';
 import { FOLDER_LABEL, LINK_LABEL } from './../../utils/constants';
 import { IconsType, ILinkIcon } from '@/types/index';
-import { Folder } from './Folder';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import { StatelessComponent } from '@/core/Component';
 import { clickSwitcher, createMouseDownHandlerForDragDrop } from '@/utils/event';
-import { Application } from './Application';
 
 type IconsProps = {
   icons: IconsType;
@@ -20,11 +20,11 @@ export class Icons extends StatelessComponent<IconsProps> {
     sortedIcons.map(icon => {
       switch (icon.type) {
         case APPLICATION_LABEL:
-          return new Application(targetEl, icon);
+          return new ApplicationIcon(targetEl, icon);
         case FOLDER_LABEL:
-          return new Folder(targetEl, icon);
+          return new FolderIcon(targetEl, icon);
         case LINK_LABEL:
-          return new Link(targetEl, icon as ILinkIcon);
+          return new LinkIcon(targetEl, icon as ILinkIcon);
       }
     });
   }

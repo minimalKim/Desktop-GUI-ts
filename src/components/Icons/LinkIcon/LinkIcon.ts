@@ -2,11 +2,11 @@ import { GithubIconDataURI, notionIconDataURI } from './image';
 import { ILinkIcon } from '@/types/index';
 import { StatelessComponent } from '@/core/Component';
 import { DRAG_BOX, DRAG_GRABBER, LINK_LABEL } from '@/utils/constants';
-import styles from './Link.module.css';
+import styles from './LinkIcon.module.css';
 
-type LinkProps = ILinkIcon;
+type LinkIconProps = ILinkIcon;
 
-export class Link extends StatelessComponent<LinkProps> {
+export class LinkIcon extends StatelessComponent<LinkIconProps> {
   template() {
     return `
       <div class="${styles.wrapper} ${DRAG_BOX} ${LINK_LABEL}" data-id="${this.props.id}">
