@@ -4,8 +4,4 @@ import { folderIconDataURI } from '../FolderIcon/image';
 
 type ApplicationIconProps = IApplicationIcon;
 
-export class ApplicationIcon extends IconComponent<ApplicationIconProps> {
-  willMount(): void {
-    console.log(this.imgDataURI);
-  }
-}
+export class ApplicationIcon extends IconComponent<ApplicationIconProps> {}

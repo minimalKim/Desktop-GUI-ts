@@ -123,15 +123,19 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
 
   createFolder() {
     const folders = [...this.state.icons.folders];
+    const icons = { ...this.state.icons };
+    const iconsLength = Object.entries(icons)
+      .map(icon => icon[1].length)
+      .reduce((a, b) => a + b);
 
     this.setState({
       ...this.state,
       icons: {
-        ...this.state.icons,
+        ...icons,
         folders: [
           ...folders,
           {
-            order: folders.length + this.state.icons.applications.length,
+            order: iconsLength,
             type: FOLDER_LABEL,
             title: `new folder ${folders.length + 1}`,
             id: makeId(),

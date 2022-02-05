@@ -64,7 +64,6 @@ export class StatefulComponent<P, S> extends StatelessComponent<P> implements IS
   protected state: S;
 
   setState(newState: S) {
-    console.log(this.state);
     this.state = { ...this.state, ...newState };
     this.render(true);
   }
