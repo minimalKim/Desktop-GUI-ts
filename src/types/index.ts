@@ -10,17 +10,17 @@ export interface IWindow extends BaseUI {
   position: Position;
 }
 
-export interface ILinkIcon extends Icon {
+export interface ILinkIcon extends IIcon {
   url: string;
 }
 
-export interface IApplicationIcon extends Icon {}
+export interface IApplicationIcon extends IIcon {}
 
-export interface IFolderIcon extends Icon {
+export interface IFolderIcon extends IIcon {
   children?: Array<IFolderIcon | IApplicationIcon>;
 }
 
-interface Icon extends BaseUI {
+export interface IIcon extends BaseUI {
   order: number;
 }
 

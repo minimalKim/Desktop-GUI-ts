@@ -50,14 +50,20 @@ export function createMouseDownHandlerForDragDrop(
 
     position = { x: null, y: null };
     draggingEl = null;
+    targetEl = null;
     isDraggingStarted = false;
-
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
   };
 
   const mouseMoveHandler = (e: MouseEvent) => {
     const draggingRect = draggingEl.getBoundingClientRect();
+
+    if (!e.buttons) {
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+      return;
+    }
 
     const newTargetEl = Array.from(document.querySelectorAll(DRAG_BOX_SELECTOR)).find(el => {
       const { top, right, bottom, left } = (el as HTMLElement).dataset;
@@ -98,6 +104,7 @@ export function createMouseDownHandlerForDragDrop(
     }
 
     draggingEl.style.position = 'absolute';
+    draggingEl.style.zIndex = '10';
     draggingEl.style.top = `${e.pageY - position.y}px`;
     draggingEl.style.left = `${e.pageX - position.x}px`;
   };
