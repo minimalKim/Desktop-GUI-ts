@@ -2,7 +2,7 @@ import { LinkIcon } from './LinkIcon/LinkIcon';
 import { FolderIcon } from './FolderIcon/FolderIcon';
 import { ApplicationIcon } from './ApplicationIcon/ApplicationIcon';
 import { FOLDER_LABEL, LINK_LABEL } from './../../utils/constants';
-import { IconsType, ILinkIcon } from '@/types/index';
+import { IconsType, LinkIconType } from '@/types/index';
 import { APPLICATION_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import { StatelessComponent } from '@/core/Component';
 import { clickSwitcher, createMouseDownHandlerForDragDrop } from '@/utils/event';
@@ -24,7 +24,7 @@ export class Icons extends StatelessComponent<IconsProps> {
         case FOLDER_LABEL:
           return new FolderIcon(targetEl, icon);
         case LINK_LABEL:
-          return new LinkIcon(targetEl, icon as ILinkIcon);
+          return new LinkIcon(targetEl, icon as LinkIconType);
       }
     });
   }
@@ -52,7 +52,7 @@ export class Icons extends StatelessComponent<IconsProps> {
         isApplication
           ? newIcons.applications.push({ ...matchedItemState, order: idx + 1 })
           : isLink
-          ? newIcons.links.push({ ...(matchedItemState as ILinkIcon), order: idx + 1 })
+          ? newIcons.links.push({ ...(matchedItemState as LinkIconType), order: idx + 1 })
           : newIcons.folders.push({ ...matchedItemState, order: idx + 1 });
       });
 

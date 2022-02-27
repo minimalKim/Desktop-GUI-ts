@@ -1,38 +1,38 @@
-export interface IContextMenu {
+export type Position = {
+  x: number;
+  y: number;
+};
+
+type BaseUIType = {
+  id: string;
+  title: string;
+  type: string;
+};
+
+export type IconType = BaseUIType & {
+  order: number;
+};
+
+export type LinkIconType = IconType & {
+  url: string;
+};
+
+export type ApplicationIconType = IconType;
+
+export type FolderIconType = IconType & {
+  children?: Array<FolderIconType | ApplicationIconType>;
+};
+
+export type IconsType = { links: LinkIconType[]; applications: ApplicationIconType[]; folders: FolderIconType[] };
+
+export type ContextMenuType = {
   isVisible: boolean;
   isIconClicked: boolean;
   position: Position;
   iconId: string | null;
-}
+};
 
-export interface IWindow extends BaseUI {
+export type WindowType = BaseUIType & {
   isSelected: boolean;
   position: Position;
-}
-
-export interface ILinkIcon extends IIcon {
-  url: string;
-}
-
-export interface IApplicationIcon extends IIcon {}
-
-export interface IFolderIcon extends IIcon {
-  children?: Array<IFolderIcon | IApplicationIcon>;
-}
-
-export interface IIcon extends BaseUI {
-  order: number;
-}
-
-interface BaseUI {
-  id: string;
-  title: string;
-  type: string;
-}
-
-export type IconsType = { links: ILinkIcon[]; applications: IApplicationIcon[]; folders: IFolderIcon[] };
-
-export type Position = {
-  x: number;
-  y: number;
 };

@@ -1,9 +1,9 @@
-import { IWindow } from '@/types/index';
+import { WindowType } from '@/types/index';
 import { DRAG_BOX, DRAG_GRABBER } from '@/utils/constants';
 import { StatelessComponent } from '@/core/Component';
 import styles from './Window.module.css';
 
-type WindowProps = IWindow;
+type WindowProps = WindowType;
 
 export class Window extends StatelessComponent<WindowProps> {
   template() {

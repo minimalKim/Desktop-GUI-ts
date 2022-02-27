@@ -1,9 +1,9 @@
 import { StatelessComponent } from '@/core/Component';
-import { IContextMenu } from '@/types';
+import { ContextMenuType } from '@/types';
 import styles from './ContextMenu.module.css';
 
 type ContextMenuProps = {
-  contextMenu: IContextMenu;
+  contextMenu: ContextMenuType;
   deleteIcon: (id: string) => void;
   createFolder: () => void;
 };

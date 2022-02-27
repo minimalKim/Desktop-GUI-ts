@@ -1,4 +1,4 @@
-import { IconsType, IContextMenu, IWindow } from '@/types';
+import { IconsType, ContextMenuType, WindowType } from '@/types';
 import { ContextMenu } from './../ContextMenu/ContextMenu';
 import { Windows } from './../Windows/Windows';
 import { FOLDER_LABEL, APPLICATION_LABEL, WINDOW_LABEL, LINK_LABEL } from '@/utils/constants';
@@ -10,8 +10,8 @@ import { StatefulComponent } from '@/core/Component';
 type DesktopProps = {};
 type DesktopState = {
   icons: IconsType;
-  contextMenu: IContextMenu;
-  windows?: IWindow[];
+  contextMenu: ContextMenuType;
+  windows?: WindowType[];
 };
 
 export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
@@ -200,7 +200,7 @@ export class Desktop extends StatefulComponent<DesktopProps, DesktopState> {
     });
   }
 
-  dragWindow(id: string, draggingWindowState: IWindow): void {
+  dragWindow(id: string, draggingWindowState: WindowType): void {
     const windows = [...this.state.windows] || [];
     windows.map(window => (window.isSelected = false));
     draggingWindowState.isSelected = true;

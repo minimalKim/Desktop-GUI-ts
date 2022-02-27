@@ -2,12 +2,12 @@ import { Window } from './Window';
 import { createMouseDownHandlerForDragDrop } from '@/utils/event';
 import { DRAG_GRABBER_SELECTOR } from '@/utils/constants';
 import { StatelessComponent } from '@/core/Component';
-import { IWindow } from '@/types';
+import { WindowType } from '@/types';
 
 type WindowsProps = {
-  windows: IWindow[];
+  windows: WindowType[];
   closeWindow: (id: string) => void;
-  dragWindow: (id: string, draggingWindowState: IWindow) => void;
+  dragWindow: (id: string, draggingWindowState: WindowType) => void;
 };
 
 export class Windows extends StatelessComponent<WindowsProps> {
