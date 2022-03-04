@@ -1,3 +1,5 @@
+import { isEqual } from '@/utils/helper';
+
 export interface IComponent {
   willMount(): void;
   template(): void;
@@ -64,6 +66,7 @@ export class StatefulComponent<P, S> extends StatelessComponent<P> implements IS
   protected state: S;
 
   setState(newState: S) {
+    if (isEqual(this.state, newState)) return;
     this.state = { ...this.state, ...newState };
     this.render(true);
   }

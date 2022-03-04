@@ -1,11 +1,15 @@
 import { DRAG_BOX, FOLDER_LABEL, DRAG_GRABBER, LINK_LABEL, DRAG_GRABBER_SELECTOR } from '@/utils/constants';
-import { StatelessComponent } from '../Component';
+import { IComponent, StatelessComponent } from '../Component';
 import { IconType } from '@/types';
 import styles from './Icon.module.css';
 import { LinkIconProps } from '@/components/Icons/LinkIcon';
 import { defaultIconDataURI } from './image';
 
-export class IconComponent<P extends IconType> extends StatelessComponent<P> {
+interface IIconComponent extends IComponent {
+  setImgDataURI(imgDataURI: string): void;
+}
+
+export class IconComponent<P extends IconType> extends StatelessComponent<P> implements IIconComponent {
   protected imgDataURI: string;
 
   setImgDataURI(imgDataURI: string): void {
